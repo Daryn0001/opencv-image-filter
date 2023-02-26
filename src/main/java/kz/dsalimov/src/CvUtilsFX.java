@@ -1,76 +1,110 @@
 package kz.dsalimov.src;
 
 
-import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
-public class CvUtilsFX extends Application {
-    public static void main(String[] args) {
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-        launch(args);
+
+public class CvUtilsFX {
+
+    public static WritableImage matToWritableImage(Mat mat) throws IOException {
+        MatOfByte matOfByte = new MatOfByte();
+        Imgcodecs.imencode(".jpg", mat, matOfByte);
+
+        byte[] byteArray = matOfByte.toArray();
+
+        InputStream in = new ByteArrayInputStream(byteArray);
+        BufferedImage bufImage = ImageIO.read(in);
+        System.out.println(" Image loaded");
+        return SwingFXUtils.toFXImage(bufImage, null);
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        Pane pane = new Pane();
-        pane.getChildren().addAll(new ArcPane(), new LinePane(), new CirclePane());
 
-        Scene scene = new Scene(pane, 400, 350);
+    public static WritableImage matToImageFX(Mat mat) {
+        if (mat == null || mat.empty()) return null;
+        if (mat.depth() == CvType.CV_8U) {
+        } else if (mat.depth() == CvType.CV_16U) {
+            Mat m_16 = new Mat();
+            mat.convertTo(m_16, CvType.CV_8U, 255.0 / 65535);
+            mat = m_16;
+        } else if (mat.depth() == CvType.CV_32F) {
+            Mat m_32 = new Mat();
+            mat.convertTo(m_32, CvType.CV_8U, 255);
+            mat = m_32;
+        } else return null;
 
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Hang man");
-        primaryStage.show();
+        if (mat.channels() == 1) {
+            Mat m_bgra = new Mat();
+            Imgproc.cvtColor(mat, m_bgra, Imgproc.COLOR_GRAY2BGRA);
+            mat = m_bgra;
+        } else if(mat.channels() == 3) {
+            Mat m_bgra = new Mat();
+            Imgproc.cvtColor(mat, m_bgra, Imgproc.COLOR_BGR2BGRA);
+            mat = m_bgra;
+        }
+        else if (mat.channels() == 4) {
+        } else return null;
 
 
+        byte[] buf = new byte[mat.channels() * mat.cols() * mat.rows()];
+        mat.get(0, 0, buf);
+
+        WritableImage wim = new WritableImage(mat.cols(), mat.rows());
+        PixelWriter pw = wim.getPixelWriter();
+        pw.setPixels(0, 0, mat.cols(), mat.rows(),
+                WritablePixelFormat.getByteBgraInstance(),
+                buf, 0, mat.cols() * 4);
+
+        return wim;
     }
-}
 
-class CirclePane extends Pane {
-    public CirclePane() {
-        Circle circle = new Circle();
-        circle.setCenterX(210);
-        circle.setCenterY(90);
-        circle.setRadius(30);
-        circle.setStroke(Color.BLACK);
-        circle.setFill(Color.WHITE);
-
-        getChildren().add(circle);
+    public static Mat imageFXToMat(Image img) {
+        return null;
     }
-}
 
-class LinePane extends Pane {
-    public LinePane() {
-        Line line1 = new Line(80, 20, 80, 290);
-        Line line2 = new Line(80, 20, 210, 20);
-        Line line3 = new Line(210, 20, 210, 60);
-        Line line4 = new Line(210, 120, 210, 220);
+    public static void showImage(Mat img, String title) {
+        Image im = matToImageFX(img);
 
-        Line line5 = new Line(210, 220, 140, 280);
-        Line line6 = new Line(210, 220, 280, 280);
+        Stage window = new Stage();
+        ScrollPane sp = new ScrollPane();
+        ImageView iv = new ImageView();
 
-        Line line7 = new Line(195, 105, 105, 185);
-        Line line8 = new Line(225, 105, 315, 185);
+        if (im != null) {
+            iv.setImage(im);
+            if (im.getWidth() < 1900) {
+                sp.setPrefWidth(im.getWidth() + 5);
+            } else sp.setPrefWidth(1900.0);
 
-        getChildren().addAll(line1, line2, line3, line4, line5, line6, line7, line8);
+            if (im.getHeight() < 1000) {
+                sp.setPrefHeight(im.getHeight() + 5);
+            } else sp.setPrefHeight(1000.0);
+        }
+        sp.setContent(iv);
+        sp.setPannable(true);
 
+        BorderPane box = new BorderPane();
+        box.setCenter(sp);
+
+        Scene scene = new Scene(box);
+        window.setScene(scene);
+        window.setTitle(title);
+        window.show();
     }
-}
 
-class ArcPane extends Pane {
-    public ArcPane() {
-        Arc arc1 = new Arc(80, 330, 60, 40, 0, 180);
-        arc1.setFill(Color.WHITE);
-        arc1.setStrokeWidth(3);
-        arc1.setStroke(Color.BLACK);
-        arc1.setType(ArcType.OPEN);
-        getChildren().add(arc1);
 
-    }
 }
