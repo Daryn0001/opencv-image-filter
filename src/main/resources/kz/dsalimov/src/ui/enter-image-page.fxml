@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" minHeight="500.0" minWidth="400.0" prefHeight="300.0" prefWidth="300.0" spacing="20.0"
+      style="-fx-background-color:  #46178f;"
+      xmlns="http://javafx.com/javafx/11.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="kz.dsalimov.src.ui.EnterImagePage"
+>
+    <StackPane maxWidth="700.0" prefHeight="500.0" prefWidth="700.0"
+               style="-fx-background-color: #fff; -fx-border-radius: 10;">
+        <VBox alignment="CENTER" minWidth="300.0" prefHeight="200.0" prefWidth="250.0" spacing="20.0"
+              style="-fx-background-color: #46178f;">
+            <VBox alignment="CENTER" minHeight="120.0" prefHeight="120.0" prefWidth="100.0" maxWidth="300"
+                  style="-fx-border-radius: 50; -fx-background-color: #fff;">
+                <Button fx:id="enterButton" alignment="CENTER" minHeight="40.0" onAction="#onEnterButton"
+                        prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #333;"
+                        text="Choose image"
+                        textAlignment="CENTER" textFill="#ece8e8">
+                    <font>
+                        <Font name="Consolas Bold" size="18.0"/>
+                    </font>
+                </Button>
+            </VBox>
+        </VBox>
+    </StackPane>
+</VBox>

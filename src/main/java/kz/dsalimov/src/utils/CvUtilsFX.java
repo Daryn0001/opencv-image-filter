@@ -1,5 +1,4 @@
-package kz.dsalimov.src;
-
+package kz.dsalimov.src.utils;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -19,7 +18,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class CvUtilsFX {
 
     public static WritableImage matToWritableImage(Mat mat) throws IOException {
@@ -33,7 +31,6 @@ public class CvUtilsFX {
         System.out.println(" Image loaded");
         return SwingFXUtils.toFXImage(bufImage, null);
     }
-
 
     public static WritableImage matToImageFX(Mat mat) {
         if (mat == null || mat.empty()) return null;
@@ -103,8 +100,7 @@ public class CvUtilsFX {
         Scene scene = new Scene(box);
         window.setScene(scene);
         window.setTitle(title);
+        window.setX(1200.0);
         window.show();
     }
-
-
 }

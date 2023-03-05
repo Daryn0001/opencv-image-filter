@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<VBox alignment="CENTER" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" spacing="20.0"
+      style="-fx-background-color:  #46178f;"
+      xmlns="http://javafx.com/javafx/11.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="kz.dsalimov.src.ui.FilterChooserPage"
+>
+
+    <StackPane maxWidth="250.0" prefHeight="150.0" prefWidth="250.0"
+               style="-fx-background-color: #fff; -fx-border-radius: 10;">
+        <VBox alignment="CENTER" minWidth="300.0" prefHeight="200.0" prefWidth="250.0" spacing="20.0"
+              style="-fx-background-color: #46178f;">
+
+            <Button fx:id="enterOrig" alignment="CENTER" minHeight="40.0" onAction="#onEnterOrig"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="ORIGINAL"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+
+            <Button fx:id="enterBlur" alignment="CENTER" minHeight="40.0" onAction="#onEnterBlur"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="BLUR"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+            <Button fx:id="enterBoxFilter" alignment="CENTER" minHeight="40.0" onAction="#onEnterBoxFilter"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="BOX FILTER"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+            <Button fx:id="enterDilate" alignment="CENTER" minHeight="40.0" onAction="#onEnterDilate"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="DILATE"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+            <Button fx:id="enterErode" alignment="CENTER" minHeight="40.0" onAction="#onEnterErode"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="ERODE"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+            <Button fx:id="enterPyrDown" alignment="CENTER" minHeight="40.0" onAction="#onEnterPyrDown"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="PYR DOWN"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+            <Button fx:id="enterPyrUp" alignment="CENTER" minHeight="40.0" onAction="#onEnterPyrUp"
+                    prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #333;" text="PYR UPO"
+                    textAlignment="CENTER" textFill="#ece8e8">
+                <font>
+                    <Font name="Consolas Bold" size="18.0"/>
+                </font>
+            </Button>
+
+        </VBox>
+
+    </StackPane>
+
+</VBox>
